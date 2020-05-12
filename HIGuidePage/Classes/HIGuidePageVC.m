@@ -9,15 +9,13 @@
 #import "HIGuidePageVC.h"
 #import "HIGuidePageCollectionViewCell.h"
 
-
-
 @interface HIGuidePageVC ()<UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate>
 {
 }
 @property (nonatomic,assign) BOOL constraintsUpdated;
 
-@property (nonatomic,strong) UIPageControl* pageControl;
-@property (nonatomic,strong) UICollectionView* collectionView;
+@property (nonatomic,strong) UIPageControl *pageControl;
+@property (nonatomic,strong) UICollectionView *collectionView;
 
 @end
 
@@ -35,7 +33,6 @@
     // Dispose of any resources that can be recreated.
 }
 
-
 -(void)updateViewConstraints{
     [super updateViewConstraints];
     if(self.constraintsUpdated == NO){
@@ -44,8 +41,6 @@
         self.constraintsUpdated = YES;
     }
 }
-
-
 
 #pragma mark - UICollectionViewDelegate & UICollectionViewDataSource
 
@@ -75,8 +70,11 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    
-    self.pageControl.currentPage = (scrollView.contentOffset.x / kHIGuidePageScreenBounds.size.width);
+    int curPage = (scrollView.contentOffset.x / kHIGuidePageScreenBounds.size.width);
+    self.pageControl.currentPage = curPage;
+    if (self.scrollFinishedBlock) {
+        self.scrollFinishedBlock(curPage);
+    }
 }
 
 /**
@@ -112,7 +110,6 @@
     }
     return _collectionView;
 }
-
 
 - (UIPageControl *)pageControl{
     if (_pageControl == nil) {

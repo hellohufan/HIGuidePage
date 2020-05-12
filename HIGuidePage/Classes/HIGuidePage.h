@@ -9,16 +9,41 @@
 #import <UIKit/UIKit.h>
 #import "HIGuidePageConstants.h"
 
-#define kHIGuidePage_DefaultPageControlBottomSpace  20
-#define KHIGuidePage_DefaultLastButtonBottomSpace   60
-#define HIGuidePage_UserDefault_Version(v) [NSString stringWithFormat:@"HIGuidePage_version_%@", v]
-
 @interface HIGuidePage : UIWindow
 
-@property (nonatomic,strong) NSNumber* pageControlBottomSpace UI_APPEARANCE_SELECTOR;
-@property (nonatomic,strong) NSNumber* lastButtonBottmSpace UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong, nullable) NSNumber *pageControlBottomSpace UI_APPEARANCE_SELECTOR;
+@property (nonatomic, strong, nullable) NSNumber *lastButtonBottmSpace UI_APPEARANCE_SELECTOR;
+@property (nonatomic, assign, readwrite) BOOL buttonHidden;
 
-+(instancetype) instance;
+/**
+*  引导页切换回调
+*
+*  @Discussion     切换回调
+*/
+@property (nonatomic, copy, nullable) HIGuildePageScrollFinishedBlock scrollFinishBlock;
+
++ (nonnull instancetype) instance;
+
+/**
+ *  引导页图片
+ *
+ *  @param images       引导页图片
+ *  @Discussion     默认按钮文字和按钮边框白色，背景clear
+ */
+- (void)showGuideViewWithImages:(nonnull NSArray *)images
+            withCompletionBlock:(nullable HIGuildePageCompletionBlock)block;
+
+/**
+ *  引导页图片
+ *
+ *  @param images       引导页图片
+ *  @param title         按钮文字
+ *  @Discussion     默认按钮文字和按钮边框白色，背景clear
+ */
+- (void)showGuideViewWithImages:(nonnull NSArray *)images
+                 andButtonTitle:(nullable NSString *)title
+            withCompletionBlock:(nullable HIGuildePageCompletionBlock)block;
+
 /**
  *  引导页图片
  *
@@ -28,10 +53,11 @@
  *  @param bgColor     按钮背景颜色
  *  @param borderColor 按钮边框颜色
  */
-- (void)showGuideViewWithImages:(NSArray *)images
-                 andButtonTitle:(NSString *)title
-            andButtonTitleColor:(UIColor *)titleColor
-               andButtonBGColor:(UIColor *)bgColor
-           andButtonBorderColor:(UIColor *)borderColor withCompletionBlock:(void(^)(void))block;
+- (void)showGuideViewWithImages:(nonnull NSArray *)images
+                 andButtonTitle:(nullable NSString *)title
+            andButtonTitleColor:(nullable UIColor *)titleColor
+               andButtonBGColor:(nullable UIColor *)bgColor
+           andButtonBorderColor:(nullable UIColor *)borderColor
+            withCompletionBlock:(nullable HIGuildePageCompletionBlock)block;
 
 @end

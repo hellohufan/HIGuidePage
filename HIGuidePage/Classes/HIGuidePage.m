@@ -16,7 +16,8 @@
 @end
 
 @implementation HIGuidePage
-+(instancetype) instance{
+
++ (instancetype) instance{
     static HIGuidePage *result = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -26,21 +27,28 @@
     return result;
 }
 
--(void)showGuideViewWithImages:(NSArray *)images andButtonTitle:(NSString *)title andButtonTitleColor:(UIColor *)titleColor andButtonBGColor:(UIColor *)bgColor andButtonBorderColor:(UIColor *)borderColor withCompletionBlock:(void (^)(void))block{
+- (void)showGuideViewWithImages:(nonnull NSArray *)images withCompletionBlock:(nullable HIGuildePageCompletionBlock)block{
+    [self showGuideViewWithImages:images andButtonTitle:nil withCompletionBlock:block];
+}
+
+- (void)showGuideViewWithImages:(nonnull NSArray *)images andButtonTitle:(nullable NSString *)title withCompletionBlock:(nullable HIGuildePageCompletionBlock)block{
+    [self showGuideViewWithImages:images andButtonTitle:title andButtonTitleColor:nil andButtonBGColor:nil andButtonBorderColor:nil withCompletionBlock:block];
+}
+
+- (void)showGuideViewWithImages:(nonnull NSArray *)images andButtonTitle:(nullable NSString *)title andButtonTitleColor:(nullable UIColor *)titleColor andButtonBGColor:(nullable UIColor *)bgColor andButtonBorderColor:(nullable UIColor *)borderColor withCompletionBlock:(nullable HIGuildePageCompletionBlock)block{
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *version = [[NSBundle mainBundle].infoDictionary objectForKey:@"CFBundleShortVersionString"];
     
     //根据版本号来判断是否需要显示引导页，一般来说每更新一个版本引导页都会有相应的修改
     BOOL showedBefore = [userDefaults boolForKey:HIGuidePage_UserDefault_Version(version)];
-    
     if (!showedBefore) {
         HIGuidePageVC *controller = [[HIGuidePageVC alloc] init];
         controller.images = images;
-        controller.buttonTitle = title;
-        controller.titleColor = titleColor;
-        controller.buttonBgColor = bgColor;
-        controller.buttonBorderColor = borderColor;
+        controller.buttonTitle = title? title: @"立即体验";
+        controller.titleColor = titleColor? titleColor: [UIColor whiteColor];
+        controller.buttonBgColor = bgColor? bgColor: [UIColor clearColor];
+        controller.buttonBorderColor = borderColor? borderColor: [UIColor whiteColor];
         
         //定制化位置
         if([HIGuidePage appearance].lastButtonBottmSpace != nil){
@@ -65,16 +73,17 @@
                 block();
             }
         };
-        
+        controller.scrollFinishedBlock = ^(int pageIndex) {
+            if (self.scrollFinishBlock) {
+                self.scrollFinishBlock(pageIndex);
+            }
+        };
         [self setRootViewController:controller];
         [self addSubview:controller.view];
-        
         _coreView = controller.view;
         [self setupContraints];
-        
         [self makeKeyAndVisible];
         self.hidden = NO;
-        
         [userDefaults setBool:YES forKey:HIGuidePage_UserDefault_Version(version)];
         [userDefaults synchronize];
     }
@@ -83,12 +92,9 @@
             block();
         }
     }
-   
-    
-    
 }
 
--(void)setupContraints{
+- (void)setupContraints{
     
     NSDictionary *dict = NSDictionaryOfVariableBindings(_coreView);
     NSString *vfl = @"|-0-[_coreView]-0-|";
