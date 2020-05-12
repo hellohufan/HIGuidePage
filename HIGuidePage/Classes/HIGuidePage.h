@@ -9,9 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "HIGuidePageConstants.h"
 
-#define kAEGuideView_DefaultPageControlBottomSpace  20
-#define KAEGuideView_DefaultLastButtonBottomSpace   60
-
+#define kHIGuidePage_DefaultPageControlBottomSpace  20
+#define KHIGuidePage_DefaultLastButtonBottomSpace   60
+#define HIGuidePage_UserDefault_Version(v) [NSString stringWithFormat:@"HIGuidePage_version_%@", v]
 
 @interface HIGuidePage : UIWindow
 

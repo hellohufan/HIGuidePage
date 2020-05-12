@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'HIGuidePage'
-  s.version          = '0.1.0'
+  s.version          = '0.1.1'
   s.summary          = 'An easy way for creating the guide views'
 
 # This description is used to generate tags and improve search results.

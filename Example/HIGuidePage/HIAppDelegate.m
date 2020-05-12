@@ -6,13 +6,36 @@
 //  Copyright (c) 2020 hellohufan. All rights reserved.
 //
 
+
+
 #import "HIAppDelegate.h"
+#import "HIGuidePage.h"
+
+#define HIGUIDEPAGE_IMAGE(name) [UIImage imageNamed:name]
+
 
 @implementation HIAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    NSArray *images = @[HIGUIDEPAGE_IMAGE(@"1.png"), HIGUIDEPAGE_IMAGE(@"2.png"), HIGUIDEPAGE_IMAGE(@"3.png")];
+    [HIGuidePage appearance].pageControlBottomSpace = @(0);
+    [HIGuidePage appearance].lastButtonBottmSpace = @(40);
+
+
+    HIGuidePage *guideView = [HIGuidePage instance];
+
+    __weak HIAppDelegate* weakDelegate = self;
+    [guideView showGuideViewWithImages:images
+                       andButtonTitle:@"立即体验"
+                  andButtonTitleColor:[UIColor whiteColor]
+                     andButtonBGColor:[UIColor clearColor]
+                 andButtonBorderColor:[UIColor whiteColor]
+                  withCompletionBlock:^(void){
+                      
+                      [weakDelegate.window makeKeyWindow];
+                  }];
     return YES;
 }
 

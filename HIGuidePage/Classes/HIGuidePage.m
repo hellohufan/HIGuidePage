@@ -32,10 +32,10 @@
     NSString *version = [[NSBundle mainBundle].infoDictionary objectForKey:@"CFBundleShortVersionString"];
     
     //根据版本号来判断是否需要显示引导页，一般来说每更新一个版本引导页都会有相应的修改
-    BOOL showedBefore = [userDefaults boolForKey:[NSString stringWithFormat:@"AEGuideView_version_%@", version]];
+    BOOL showedBefore = [userDefaults boolForKey:HIGuidePage_UserDefault_Version(version)];
     
     if (!showedBefore) {
-        HIGuidePageVC* controller = [[HIGuidePageVC alloc] init];
+        HIGuidePageVC *controller = [[HIGuidePageVC alloc] init];
         controller.images = images;
         controller.buttonTitle = title;
         controller.titleColor = titleColor;
@@ -47,14 +47,14 @@
             controller.lastButtonBottmSpace = [HIGuidePage appearance].lastButtonBottmSpace.integerValue;
         }
         else{
-            controller.lastButtonBottmSpace = KAEGuideView_DefaultLastButtonBottomSpace;
+            controller.lastButtonBottmSpace = KHIGuidePage_DefaultLastButtonBottomSpace;
         }
         
         if([HIGuidePage appearance].pageControlBottomSpace != nil){
             controller.pageControlBottomSpace = [HIGuidePage appearance].pageControlBottomSpace.integerValue;
         }
         else{
-            controller.pageControlBottomSpace = kAEGuideView_DefaultPageControlBottomSpace;
+            controller.pageControlBottomSpace = kHIGuidePage_DefaultPageControlBottomSpace;
         }
         
         __weak HIGuidePage* weakSelf = self;
@@ -75,7 +75,7 @@
         [self makeKeyAndVisible];
         self.hidden = NO;
         
-        [userDefaults setBool:YES forKey:[NSString stringWithFormat:@"AEGuideView_version_%@", version]];
+        [userDefaults setBool:YES forKey:HIGuidePage_UserDefault_Version(version)];
         [userDefaults synchronize];
     }
     else{
