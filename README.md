@@ -19,8 +19,23 @@ it, simply add the following line to your Podfile:
 ```ruby
 pod 'HIGuidePage'
 ```
+## Usege
+(see sample Xcode project in /Demo)
+Using 'HIGuidePage' in your app will usually look as simple as this:
+```objc
+NSArray *images = @[HIGUIDEPAGE_IMAGE(@"1.png"), HIGUIDEPAGE_IMAGE(@"2.png"), HIGUIDEPAGE_IMAGE(@"3.png")];
+[HIGuidePage appearance].pageControlBottomSpace = @(20);
+[HIGuidePage appearance].lastButtonBottmSpace = @(80);
 
-## Author
+HIGuidePage *guideView = [HIGuidePage instance];
+
+__weak HIAppDelegate* weakDelegate = self;
+[guideView showGuideViewWithImages:images withCompletionBlock:^(void){
+    [weakDelegate.window makeKeyWindow];
+}];
+```
+
+## Autho
 
 hellohufan, hellohufan@gmail.com
 
