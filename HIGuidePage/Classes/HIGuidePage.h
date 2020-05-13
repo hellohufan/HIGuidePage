@@ -13,12 +13,11 @@
 
 @property (nonatomic, strong, nullable) NSNumber *pageControlBottomSpace UI_APPEARANCE_SELECTOR;
 @property (nonatomic, strong, nullable) NSNumber *lastButtonBottmSpace UI_APPEARANCE_SELECTOR;
-@property (nonatomic, assign, readwrite) BOOL buttonHidden;
 
 /**
 *  引导页切换回调
 *
-*  @Discussion     切换回调
+*  @Discussion     page切换回调block
 */
 @property (nonatomic, copy, nullable) HIGuildePageScrollFinishedBlock scrollFinishBlock;
 
@@ -30,7 +29,7 @@
  *  @param images       引导页图片
  *  @Discussion     默认按钮文字和按钮边框白色，背景clear
  */
-- (void)showGuideViewWithImages:(nonnull NSArray *)images
+- (void)showGuidePageWithImages:(nonnull NSArray *)images
             withCompletionBlock:(nullable HIGuildePageCompletionBlock)block;
 
 /**
@@ -40,24 +39,24 @@
  *  @param title         按钮文字
  *  @Discussion     默认按钮文字和按钮边框白色，背景clear
  */
-- (void)showGuideViewWithImages:(nonnull NSArray *)images
-                 andButtonTitle:(nullable NSString *)title
+- (void)showGuidePageWithImages:(nonnull NSArray *)images
+                 withButtonTitle:(nullable NSString *)title
             withCompletionBlock:(nullable HIGuildePageCompletionBlock)block;
 
 /**
  *  引导页图片
  *
- *  @param images      引导页图片
- *  @param title       按钮文字
- *  @param titleColor  文字颜色
- *  @param bgColor     按钮背景颜色
- *  @param borderColor 按钮边框颜色
+ *  @param images             引导页图片
+ *  @param title               按钮文字
+ *  @param titleColor    文字颜色
+ *  @param bgColor           按钮背景颜色
+ *  @param borderColor  按钮边框颜色
  */
-- (void)showGuideViewWithImages:(nonnull NSArray *)images
-                 andButtonTitle:(nullable NSString *)title
-            andButtonTitleColor:(nullable UIColor *)titleColor
-               andButtonBGColor:(nullable UIColor *)bgColor
-           andButtonBorderColor:(nullable UIColor *)borderColor
+- (void)showGuidePageWithImages:(nonnull NSArray *)images
+                 withButtonTitle:(nullable NSString *)title
+            withButtonTitleColor:(nullable UIColor *)titleColor
+               withButtonBGColor:(nullable UIColor *)bgColor
+           withButtonBorderColor:(nullable UIColor *)borderColor
             withCompletionBlock:(nullable HIGuildePageCompletionBlock)block;
 
 @end

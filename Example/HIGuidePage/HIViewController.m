@@ -16,7 +16,6 @@
 
 - (void)viewDidLoad
 {
-    self.title = @"首页";
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 }

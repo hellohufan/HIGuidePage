@@ -23,13 +23,13 @@
     [HIGuidePage appearance].pageControlBottomSpace = @(20);
     [HIGuidePage appearance].lastButtonBottmSpace = @(80);
 
-
     HIGuidePage *guideView = [HIGuidePage instance];
 
-    __weak HIAppDelegate* weakDelegate = self;
-    [guideView showGuideViewWithImages:images withCompletionBlock:^(void){
+    __weak HIAppDelegate *weakDelegate = self;
+    [guideView showGuidePageWithImages:images withCompletionBlock:^(void){
         [weakDelegate.window makeKeyWindow];
     }];
+    
     guideView.scrollFinishBlock = ^(int pageIndex) {
         NSLog(@"pageIndex = %d", pageIndex);
     };
